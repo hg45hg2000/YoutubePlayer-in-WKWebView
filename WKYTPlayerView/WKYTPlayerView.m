@@ -73,20 +73,20 @@ NSString static *const kWKYTPlayerSyndicationRegexPattern = @"^https://tpc.googl
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder{
     if ([super initWithCoder:aDecoder]) {
-        [self initUI];
+        [self initWKYTPlayerUI];
     }
     return self;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
-        [self initUI];
+        [self initWKYTPlayerUI];
     }
     return self;
 }
 
 
-- (void)initUI{
+- (void)initWKYTPlayerUI{
     _webView = [self createNewWebView];
     [self addSubview:self.webView];
     
@@ -342,7 +342,7 @@ NSString static *const kWKYTPlayerSyndicationRegexPattern = @"^https://tpc.googl
                 if (jsonDeserializationError) {
                     completionHandler(nil, jsonDeserializationError);
                 }
-
+                
                 completionHandler(playbackRates, nil);
             }
         }
@@ -487,7 +487,7 @@ NSString static *const kWKYTPlayerSyndicationRegexPattern = @"^https://tpc.googl
                 if (jsonDeserializationError) {
                     completionHandler(nil, jsonDeserializationError);
                 }
-
+                
                 completionHandler(videoIds, nil);
             }
         }
@@ -571,7 +571,7 @@ NSString static *const kWKYTPlayerSyndicationRegexPattern = @"^https://tpc.googl
                     WKYTPlaybackQuality quality = [WKYTPlayerView playbackQualityForString:rawQualityValue];
                     [levels addObject:[NSNumber numberWithInt:quality]];
                 }
-
+                
                 completionHandler(levels, nil);
             }
         }
@@ -899,7 +899,7 @@ NSString static *const kWKYTPlayerSyndicationRegexPattern = @"^https://tpc.googl
     }
     
     // Remove the existing webView to reset any state
-
+    
     
     NSError *error = nil;
     NSString *path = [[NSBundle bundleForClass:[WKYTPlayerView class]] pathForResource:@"YTPlayerView-iframe-player"
