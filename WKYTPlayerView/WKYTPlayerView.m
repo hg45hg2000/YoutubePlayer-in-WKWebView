@@ -73,7 +73,6 @@ NSString static *const kWKYTPlayerSyndicationRegexPattern = @"^https://tpc.googl
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder{
     if ([super initWithCoder:aDecoder]) {
-        [self initUI];
     }
     return self;
 }
@@ -85,6 +84,10 @@ NSString static *const kWKYTPlayerSyndicationRegexPattern = @"^https://tpc.googl
     return self;
 }
 
+- (void)awakeFromNib{
+    [super awakeFromNib];
+    [self initUI];
+}
 
 - (void)initUI{
     _webView = [self createNewWebView];
