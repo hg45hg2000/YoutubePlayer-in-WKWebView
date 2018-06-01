@@ -71,6 +71,58 @@ NSString static *const kWKYTPlayerSyndicationRegexPattern = @"^https://tpc.googl
 
 @implementation WKYTPlayerView
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder{
+    if ([super initWithCoder:aDecoder]) {
+        [self initUI];
+    }
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame{
+    if (self = [super initWithFrame:frame]) {
+        [self initUI];
+    }
+    return self;
+}
+
+
+- (void)initUI{
+    _webView = [self createNewWebView];
+    [self addSubview:self.webView];
+    
+    self.webView.translatesAutoresizingMaskIntoConstraints = NO;
+    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:self.webView
+                                                                     attribute:NSLayoutAttributeTop
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:self
+                                                                     attribute:NSLayoutAttributeTop
+                                                                    multiplier:1.0
+                                                                      constant:0.0];
+    NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:self.webView
+                                                                      attribute:NSLayoutAttributeLeft
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:self
+                                                                      attribute:NSLayoutAttributeLeft
+                                                                     multiplier:1.0
+                                                                       constant:0.0];
+    NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:self.webView
+                                                                       attribute:NSLayoutAttributeRight
+                                                                       relatedBy:NSLayoutRelationEqual
+                                                                          toItem:self
+                                                                       attribute:NSLayoutAttributeRight
+                                                                      multiplier:1.0
+                                                                        constant:0.0];
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.webView
+                                                                        attribute:NSLayoutAttributeBottom
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self
+                                                                        attribute:NSLayoutAttributeBottom
+                                                                       multiplier:1.0
+                                                                         constant:0.0];
+    NSArray *constraints = @[topConstraint, leftConstraint, rightConstraint, bottomConstraint];
+    [self addConstraints:constraints];
+}
+
 - (BOOL)loadWithVideoId:(NSString *)videoId {
     return [self loadWithVideoId:videoId playerVars:nil];
 }
@@ -847,41 +899,7 @@ NSString static *const kWKYTPlayerSyndicationRegexPattern = @"^https://tpc.googl
     }
     
     // Remove the existing webView to reset any state
-    [self.webView removeFromSuperview];
-    _webView = [self createNewWebView];
-    [self addSubview:self.webView];
-    
-    self.webView.translatesAutoresizingMaskIntoConstraints = NO;
-    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:self.webView
-                                                                 attribute:NSLayoutAttributeTop
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:self
-                                                                 attribute:NSLayoutAttributeTop
-                                                                multiplier:1.0
-                                                                  constant:0.0];
-    NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:self.webView
-                                                                 attribute:NSLayoutAttributeLeft
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:self
-                                                                 attribute:NSLayoutAttributeLeft
-                                                                multiplier:1.0
-                                                                  constant:0.0];
-    NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:self.webView
-                                                                 attribute:NSLayoutAttributeRight
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:self
-                                                                 attribute:NSLayoutAttributeRight
-                                                                multiplier:1.0
-                                                                  constant:0.0];
-    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.webView
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:self
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                multiplier:1.0
-                                                                  constant:0.0];
-    NSArray *constraints = @[topConstraint, leftConstraint, rightConstraint, bottomConstraint];
-    [self addConstraints:constraints];
+
     
     NSError *error = nil;
     NSString *path = [[NSBundle bundleForClass:[WKYTPlayerView class]] pathForResource:@"YTPlayerView-iframe-player"
